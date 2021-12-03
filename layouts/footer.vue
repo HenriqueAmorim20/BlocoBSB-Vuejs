@@ -8,10 +8,10 @@
           max-width="180px"
         />
       </v-col>
-      <v-col class="section">
+      <v-col class="section" style="min-width: 200px; max-width: 200px;">
         <p>Instituicional</p>
-        <span class="clickable">Sobre a bloco</span>
-        <span class="clickable">Contato</span>
+        <span class="clickable" to="/sobre" link >Sobre a bloco</span>
+        <span class="clickable" to="/contato" link >Contato</span>
         <span class="clickable" @click="showTrocas = true">Trocas e Devoluções</span>
         <span class="clickable" @click="showTabela = true">Tabela de Tamanhos</span>
       </v-col>
@@ -33,8 +33,18 @@
       </v-col>
       <v-col style="min-width: 150px">
         <v-row align="center">
-          <Icons class="mediaIcon" icon="wpp" />
-          <Icons class="mediaIcon" icon="insta" />
+          <a :href="'https://wa.me/5561981889864?text=' + getMensagem()" target="_blank">
+            <Icons
+              class="mediaIcon"
+              icon="wpp"
+            />
+          </a>
+          <a href="https://instagram.com/blocobsb" target="_blank">
+            <Icons
+              class="mediaIcon"
+              icon="insta"
+            />
+          </a>
           <v-spacer />
         </v-row>
       </v-col>
@@ -92,6 +102,10 @@ export default {
     }
   },
   methods: {
+    getMensagem () {
+      return 'oi'
+    },
+
     async cadastrarEmail () {
       try {
         // const result = await this.$axios.$post('/newsletter', { email: this.email })
@@ -99,7 +113,7 @@ export default {
       } catch (error) {
         this.$alert.error('Email já cadastrado!')
       }
-    }
+    },
   }
 }
 </script>
