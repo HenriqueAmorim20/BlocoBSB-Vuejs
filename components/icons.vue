@@ -62,4 +62,24 @@ export default {
   .entrega {
     content: url('https://api.iconify.design/carbon/delivery-parcel.svg?color=white');
   }
+
+  .close {
+    content: url('https://api.iconify.design/ep/close.svg?color=white');
+  }
+
+  .info {
+    content: url('https://api.iconify.design/bx/bx-error-circle.svg?color=white')
+  }
+
+  .error {
+    content: url('https://api.iconify.design/carbon/error.svg?color=white');
+  }
+
+  .warning {
+    content: url('https://api.iconify.design/bx/bxs-error.svg?color=white');
+  }
+
+  .success {
+    content: url('https://api.iconify.design/clarity/success-standard-solid.svg?color=white');
+  }
 </style>

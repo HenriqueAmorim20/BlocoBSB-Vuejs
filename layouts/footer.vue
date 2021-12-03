@@ -48,7 +48,7 @@
         </v-row>
         <v-row align="center" justify="center">
             <input class="emailInput" type="text" placeholder="Insira seu email..." v-model="email">
-            <v-btn dark class="participar">Participar</v-btn>
+            <v-btn dark class="participar" @click="cadastrarEmail()">Participar</v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -88,10 +88,18 @@ export default {
     return {
       showTabela: false,
       showTrocas: false,
-      email: '',
+      email: null,
     }
   },
   methods: {
+    async cadastrarEmail () {
+      try {
+        // const result = await this.$axios.$post('/newsletter', { email: this.email })
+        this.$alert.success('Agora você receberá nossas novidades!')
+      } catch (error) {
+        this.$alert.error('Email já cadastrado!')
+      }
+    }
   }
 }
 </script>
@@ -118,6 +126,7 @@ export default {
   flex-direction: column;
   min-width: 260px;
   max-width: 260px;
+  margin: 0.5rem 1rem;
 }
 
 .section p {

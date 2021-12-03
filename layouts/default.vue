@@ -4,6 +4,7 @@
     <v-main>
       <v-container>
         <Nuxt />
+        <Alert />
       </v-container>
     </v-main>
     <Footer />
@@ -12,12 +13,14 @@
 
 <script>
 
+import Alert from '~/components/Alert.vue'
 import Navbar from './navbar.vue'
 import Footer from './footer.vue'
 import backgroundImg from '~/assets/background/museu.jpeg'
 
 export default {
   components: {
+    Alert,
     Navbar,
     Footer
   },
@@ -31,7 +34,7 @@ export default {
 
 <style>
  .window {
-   height: 100vh;
+   height: 150vh;
     background-size: cover !important;
     background-position: 0% 5% !important;
     background-attachment: fixed !important;
