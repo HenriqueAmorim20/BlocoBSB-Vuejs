@@ -1,11 +1,6 @@
 <template>
   <div>
-    <v-app-bar
-      class="topNav"
-      color="transparent"
-      height="50px"
-      flat
-    >
+    <v-app-bar class="topNav" color="transparent" height="50px" flat>
       <v-row>
         <v-col>
           <v-row>
@@ -31,7 +26,11 @@
         <v-col>
           <v-row>
             <Icons class="icon" icon="search" />
-            <input class="searchInput" type="text" placeholder="Pesquise seu produto...">
+            <input
+              class="searchInput"
+              type="text"
+              placeholder="Pesquise seu produto..."
+            />
           </v-row>
         </v-col>
       </v-row>
@@ -53,7 +52,11 @@
           />
         </NuxtLink>
 
-        <NuxtLink class="lineTransition" to="/produtos" style="text-decoration: none; color: inherit;">
+        <NuxtLink
+          class="lineTransition"
+          to="/produtos"
+          style="text-decoration: none; color: inherit"
+        >
           <div class="navMenuItem">
             <Icons class="icon navMenuItemIcon" icon="produtos" />
             <span>Produtos</span>
@@ -66,105 +69,105 @@
             <span>Novidades</span>
           </div>
         </div>
-          <div>
-            <v-menu
-              open-on-hover
-              bottom
-              offset-y
-              flat
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <div class="lineTransition">
-                  <div
-                    class="navMenuItem"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <Icons class="icon navMenuItemIcon" icon="sobre" />
-                    <span>Sobre</span>
-                  </div>
+        <v-menu open-on-hover bottom offset-y flat>
+          <template v-slot:activator="{ on, attrs }">
+            <div class="lineTransition">
+              <div class="navMenuItem" v-bind="attrs" v-on="on">
+                <Icons class="icon navMenuItemIcon" icon="sobre" />
+                <span>Sobre</span>
+              </div>
+            </div>
+          </template>
+
+          <v-list
+            class="sobreMenu"
+            flat
+            :color="scrolled ? '#000000bd' : '#ffffff12'"
+          >
+            <v-list-item>
+              <NuxtLink
+                class="lineTransition"
+                to="/sobre"
+                style="text-decoration: none; color: inherit"
+              >
+                <div class="navMenuItem sobreItem">
+                  <span>Sobre a Bloco</span>
                 </div>
-              </template>
-
-              <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
-                <v-list-item>
-                  <NuxtLink class="lineTransition" to="/sobre" style="text-decoration: none; color: inherit;">
-                    <div class="navMenuItem sobreItem">
-                      <span>Sobre a Bloco</span>
-                    </div>
-                  </NuxtLink>
-                </v-list-item>
-                <v-list-item>
-                  <div class="lineTransition" @click="showTabela = true">
-                    <div class="navMenuItem sobreItem">
-                      <span>Tabela de Tamanhos</span>
-                    </div>
-                  </div>
-                </v-list-item>
-                <v-list-item>
-                  <div class="lineTransition" @click="showTrocas = true">
-                    <div class="navMenuItem sobreItem">
-                      <span>Trocas e Devoluções</span>
-                    </div>
-                  </div>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+              </NuxtLink>
+            </v-list-item>
+            <v-list-item>
+              <div class="lineTransition" @click="showTabela = true">
+                <div class="navMenuItem sobreItem">
+                  <span>Tabela de Tamanhos</span>
+                </div>
+              </div>
+            </v-list-item>
+            <v-list-item>
+              <div class="lineTransition" @click="showTrocas = true">
+                <div class="navMenuItem sobreItem">
+                  <span>Trocas e Devoluções</span>
+                </div>
+              </div>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+        <v-spacer />
+        <NuxtLink
+          class="lineTransition"
+          to="contato"
+          style="text-decoration: none; color: inherit"
+        >
+          <div class="navMenuItem">
+            <Icons class="icon navMenuItemIcon" icon="contato" />
+            <span>Contato</span>
           </div>
-          <v-spacer />
-          <NuxtLink class="lineTransition" to="contato" style="text-decoration: none; color: inherit;">
-            <div class="navMenuItem">
-              <Icons class="icon navMenuItemIcon" icon="contato" />
-              <span>Contato</span>
-            </div>
-          </NuxtLink>
-          <div class="divider" />
-          <div v-if="!logado" class="lineTransition" @click="login()">
-            <div class="navMenuItem">
-              <Icons class="icon navMenuItemIcon" icon="login" />
-              <span>Entrar</span>
-            </div>
+        </NuxtLink>
+        <div class="divider" />
+        <div v-if="!logado" class="lineTransition" @click="login()">
+          <div class="navMenuItem">
+            <Icons class="icon navMenuItemIcon" icon="login" />
+            <span>Entrar</span>
           </div>
-          <div v-if="logado">
-            <v-menu
-              open-on-hover
-              bottom
-              offset-y
-              flat
+        </div>
+        <v-menu v-if="logado" open-on-hover bottom offset-y flat>
+          <template v-slot:activator="{ on, attrs }">
+            <NuxtLink
+              class="lineTransition"
+              to="/conta"
+              style="text-decoration: none; color: inherit"
             >
-              <template v-slot:activator="{ on, attrs }">
-                <NuxtLink class="lineTransition" to="/conta"
-                    style="text-decoration: none; color: inherit;">
-                  <div
-                    class="navMenuItem"
-                    v-bind="attrs"
-                    v-on="on"
-                  >
-                    <Icons class="icon navMenuItemIcon" icon="conta" />
-                    <span>Conta</span>
-                  </div>
-                </NuxtLink>
-              </template>
+              <div class="navMenuItem" v-bind="attrs" v-on="on">
+                <Icons class="icon navMenuItemIcon" icon="conta" />
+                <span>Conta</span>
+              </div>
+            </NuxtLink>
+          </template>
 
-              <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
-                <v-list-item>
-                  <NuxtLink to="/conta" style="text-decoration: none; color: inherit;">
-                    <div class="navMenuItem sobreItem">
-                      <span>{{email}}</span>
-                    </div>
-                  </NuxtLink>
-                </v-list-item>
-                <v-list-item>
-                  <div class="lineTransition" @click="logout()">
-                    <div class="navMenuItem sobreItem">
-                      <Icons class="icon navMenuItemIcon" icon="login" />
-                      <span>Logout</span>
-                    </div>
-                  </div>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
+          <v-list
+            class="sobreMenu"
+            flat
+            :color="scrolled ? '#000000bd' : '#ffffff12'"
+          >
+            <v-list-item>
+              <NuxtLink
+                to="/conta"
+                style="text-decoration: none; color: inherit"
+              >
+                <div class="navMenuItem sobreItem">
+                  <span>{{ email }}</span>
+                </div>
+              </NuxtLink>
+            </v-list-item>
+            <v-list-item>
+              <div class="lineTransition" @click="logout()">
+                <div class="navMenuItem sobreItem">
+                  <Icons class="icon navMenuItemIcon" icon="login" />
+                  <span>Logout</span>
+                </div>
+              </div>
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </v-row>
     </v-app-bar>
     <div v-if="scrolled" style="height: 70px"></div>
@@ -174,16 +177,15 @@
 </template>
 
 <script>
-
-import TabelaTamanhos from '~/components/dialogs/tabela.vue'
-import Trocas from '~/components/dialogs/trocas.vue'
-import Icons from '~/components/icons.vue'
+import TabelaTamanhos from "~/components/dialogs/tabela.vue";
+import Trocas from "~/components/dialogs/trocas.vue";
+import Icons from "~/components/icons.vue";
 
 export default {
   components: {
     TabelaTamanhos,
     Trocas,
-    Icons
+    Icons,
   },
   data() {
     return {
@@ -192,35 +194,35 @@ export default {
       scrolled: false,
       logado: true,
       email: "hacmelo@gmail.com",
-    }
+    };
   },
   mounted() {
-  window.addEventListener("scroll", this.onScroll)
+    window.addEventListener("scroll", this.onScroll);
   },
   beforeDestroy() {
-    window.removeEventListener("scroll", this.onScroll)
+    window.removeEventListener("scroll", this.onScroll);
   },
   methods: {
-    goToNovidades () {
-      console.log('novidades')
+    goToNovidades() {
+      console.log("novidades");
     },
 
-    login () {
-      console.log('login')
+    login() {
+      console.log("login");
     },
 
-    logout () {
-      console.log('logout')
+    logout() {
+      console.log("logout");
     },
 
     onScroll(e) {
-    this.scrolled = window.top.scrollY > 50 ? true : false
+      this.scrolled = window.top.scrollY > 50 ? true : false;
     },
-    getMensagem () {
-      return 'oi'
-    }
-  }
-}
+    getMensagem() {
+      return "oi";
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -269,45 +271,50 @@ export default {
   padding: 0.5rem 1rem;
 }
 
-.navMenuItem span{
+.navMenuItem span {
   text-decoration: none;
 }
 
 .lineTransition {
-    margin: 0 0.5rem;
-    display: inline-block;
-    width: fit-content;
+  margin: 0 0.5rem;
+  display: inline-block;
+  width: fit-content;
 }
 
 .lineTransition:after {
-    display:flex;
-    content: '';
-    border-bottom: solid 1px #fff;
-    transform: scaleX(0);
-    transition: transform 250ms ease-in-out;
-  }
-.lineTransition:hover:after { transform: scaleX(1); }
+  display: flex;
+  content: "";
+  border-bottom: solid 1px #fff;
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+}
+.lineTransition:hover:after {
+  transform: scaleX(1);
+}
 
 .divider {
-    height: 30px;
-    border-left: 1px solid #ffffff;
-    margin: 0px 10px;
+  height: 30px;
+  border-left: 1px solid #ffffff;
+  margin: 0px 10px;
 }
 
 .whiteLogo {
   background-color: #ffffffab;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
   opacity: 1; /* Firefox */
 }
 
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
   color: white;
 }
 
-::-ms-input-placeholder { /* Microsoft Edge */
+::-ms-input-placeholder {
+  /* Microsoft Edge */
   color: white;
 }
 
