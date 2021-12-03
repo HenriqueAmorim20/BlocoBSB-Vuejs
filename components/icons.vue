@@ -82,4 +82,8 @@ export default {
   .success {
     content: url('https://api.iconify.design/clarity/success-standard-solid.svg?color=white');
   }
+
+  .home {
+    content: url('https://api.iconify.design/ant-design/home-filled.svg?color=white');
+  }
 </style>

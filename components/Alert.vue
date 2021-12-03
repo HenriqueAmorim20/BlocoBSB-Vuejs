@@ -27,6 +27,7 @@ export default {
       show: false,
       message: '',
       color: '',
+      icon: '',
     }
   },
 
