@@ -54,4 +54,12 @@ export default {
   .linkedin {
     content: url('https://api.iconify.design/logos/linkedin-icon.svg?color=%23069');
   }
+
+  .pagamento {
+    content: url('https://api.iconify.design/icon-park-outline/bank-transfer.svg?color=white');
+  }
+
+  .entrega {
+    content: url('https://api.iconify.design/carbon/delivery-parcel.svg?color=white');
+  }
 </style>

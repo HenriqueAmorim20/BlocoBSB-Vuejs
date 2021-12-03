@@ -18,11 +18,11 @@
       <v-col class="section">
         <p>Pagamento</p>
         <div style="display: flex">
-          <Icons class="icon" icon="login" />
+          <Icons class="icon" icon="pagamento" />
           <span> Transferência via TED ou PIX </span>
         </div>
         <div style="display: flex">
-          <Icons class="icon" icon="login" />
+          <Icons class="icon" icon="entrega" />
           <span>Entrega entre 2 e 5 dias úteis</span>
        </div>
       </v-col>
@@ -137,7 +137,7 @@ export default {
 }
 .icon {
   margin-right: 7px;
-  width: 15px;
+  width: 20px;
 }
 
 .mediaIcon {
