@@ -44,24 +44,28 @@
       :fixed="scrolled"
     >
       <v-row class="navMenu">
+        <NuxtLink to="/">
           <v-img
             :src="require('../assets/logo/logoPrincipal.png')"
             class="imgLogo"
             max-width="140px"
             :class="scrolled ? 'whiteLogo' : ''"
           />
-          <div class="lineTransition">
-            <div class="navMenuItem">
-              <Icons class="icon navMenuItemIcon" icon="produtos" />
-              <span>Produtos</span>
-            </div>
+        </NuxtLink>
+
+        <NuxtLink class="lineTransition" to="/produtos" style="text-decoration: none; color: inherit;">
+          <div class="navMenuItem">
+            <Icons class="icon navMenuItemIcon" icon="produtos" />
+            <span>Produtos</span>
           </div>
-          <div class="lineTransition">
-            <div class="navMenuItem">
-              <Icons class="icon navMenuItemIcon" icon="novidades" />
-              <span>Novidades</span>
-            </div>
+        </NuxtLink>
+
+        <div class="lineTransition" @click="goToNovidades()">
+          <div class="navMenuItem">
+            <Icons class="icon navMenuItemIcon" icon="novidades" />
+            <span>Novidades</span>
           </div>
+        </div>
           <div>
             <v-menu
               open-on-hover
@@ -84,11 +88,11 @@
 
               <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
                 <v-list-item>
-                  <div class="lineTransition">
+                  <NuxtLink class="lineTransition" to="/sobre" style="text-decoration: none; color: inherit;">
                     <div class="navMenuItem sobreItem">
                       <span>Sobre a Bloco</span>
                     </div>
-                  </div>
+                  </NuxtLink>
                 </v-list-item>
                 <v-list-item>
                   <div class="lineTransition" @click="showTabela = true">
@@ -108,14 +112,14 @@
             </v-menu>
           </div>
           <v-spacer />
-          <div class="lineTransition">
+          <NuxtLink class="lineTransition" to="contato" style="text-decoration: none; color: inherit;">
             <div class="navMenuItem">
               <Icons class="icon navMenuItemIcon" icon="contato" />
               <span>Contato</span>
             </div>
-          </div>
+          </NuxtLink>
           <div class="divider" />
-          <div v-if="!logado" class="lineTransition">
+          <div v-if="!logado" class="lineTransition" @click="login()">
             <div class="navMenuItem">
               <Icons class="icon navMenuItemIcon" icon="login" />
               <span>Entrar</span>
@@ -129,7 +133,8 @@
               flat
             >
               <template v-slot:activator="{ on, attrs }">
-                <div class="lineTransition">
+                <NuxtLink class="lineTransition" to="/conta"
+                    style="text-decoration: none; color: inherit;">
                   <div
                     class="navMenuItem"
                     v-bind="attrs"
@@ -138,19 +143,19 @@
                     <Icons class="icon navMenuItemIcon" icon="conta" />
                     <span>Conta</span>
                   </div>
-                </div>
+                </NuxtLink>
               </template>
 
               <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
                 <v-list-item>
-                  <div>
+                  <NuxtLink to="/conta" style="text-decoration: none; color: inherit;">
                     <div class="navMenuItem sobreItem">
                       <span>{{email}}</span>
                     </div>
-                  </div>
+                  </NuxtLink>
                 </v-list-item>
                 <v-list-item>
-                  <div class="lineTransition">
+                  <div class="lineTransition" @click="logout()">
                     <div class="navMenuItem sobreItem">
                       <Icons class="icon navMenuItemIcon" icon="login" />
                       <span>Logout</span>
@@ -185,7 +190,7 @@ export default {
       showTabela: false,
       showTrocas: false,
       scrolled: false,
-      logado: false,
+      logado: true,
       email: "hacmelo@gmail.com",
     }
   },
@@ -196,6 +201,18 @@ export default {
     window.removeEventListener("scroll", this.onScroll)
   },
   methods: {
+    goToNovidades () {
+      console.log('novidades')
+    },
+
+    login () {
+      console.log('login')
+    },
+
+    logout () {
+      console.log('logout')
+    },
+
     onScroll(e) {
     this.scrolled = window.top.scrollY > 50 ? true : false
     },
@@ -235,6 +252,7 @@ export default {
 }
 
 .imgLogo {
+  cursor: pointer;
   border: 1px solid black;
   margin-left: 15px;
 }
@@ -249,6 +267,10 @@ export default {
   align-items: center;
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
+}
+
+.navMenuItem span{
+  text-decoration: none;
 }
 
 .lineTransition {
