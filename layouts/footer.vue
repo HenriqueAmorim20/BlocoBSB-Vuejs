@@ -12,8 +12,8 @@
         <p>Instituicional</p>
         <span class="clickable">Sobre a bloco</span>
         <span class="clickable">Contato</span>
-        <span class="clickable">Trocas e Devoluções</span>
-        <span class="clickable">Tabela de Tamanhos</span>
+        <span class="clickable" @click="showTrocas = true">Trocas e Devoluções</span>
+        <span class="clickable" @click="showTabela = true">Tabela de Tamanhos</span>
       </v-col>
       <v-col class="section">
         <p>Pagamento</p>
@@ -67,19 +67,27 @@
         </a>
       </v-col>
     </v-row>
+    <TabelaTamanhos v-model="showTabela" />
+    <Trocas v-model="showTrocas" />
   </v-footer>
 </template>
 
 <script>
 
+import TabelaTamanhos from '~/components/dialogs/tabela.vue'
+import Trocas from '~/components/dialogs/trocas.vue'
 import Icons from '~/components/icons.vue'
 
 export default {
   components: {
+    TabelaTamanhos,
+    Trocas,
     Icons
   },
   data() {
     return {
+      showTabela: false,
+      showTrocas: false,
       email: '',
     }
   },

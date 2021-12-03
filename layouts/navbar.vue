@@ -1,182 +1,189 @@
 <template>
-  <v-row>
-    <v-col>
-      <v-app-bar
-        class="topNav"
-        color="transparent"
-        height="50px"
-        flat
-      >
-        <v-row>
-          <v-col>
-            <v-row>
-              <a
-                class="socialItem"
-                :href="'https://wa.me/5561981889864?text=' + getMensagem()"
-                target="_blank"
-              >
-                <Icons class="icon" icon="wpp" />
-                <span class="socialText">(61) 98188-9864</span>
-              </a>
-              <a
-                class="socialItem"
-                href="https://www.instagram.com/bloco.bsb/"
-                target="_blank"
-              >
-                <Icons class="icon" icon="insta" />
-                <span class="socialText">@bloco.bsb</span>
-              </a>
-            </v-row>
-          </v-col>
+  <div>
+    <v-app-bar
+      class="topNav"
+      color="transparent"
+      height="50px"
+      flat
+    >
+      <v-row>
+        <v-col>
+          <v-row>
+            <a
+              class="socialItem"
+              :href="'https://wa.me/5561981889864?text=' + getMensagem()"
+              target="_blank"
+            >
+              <Icons class="icon" icon="wpp" />
+              <span class="socialText">(61) 98188-9864</span>
+            </a>
+            <a
+              class="socialItem"
+              href="https://www.instagram.com/bloco.bsb/"
+              target="_blank"
+            >
+              <Icons class="icon" icon="insta" />
+              <span class="socialText">@bloco.bsb</span>
+            </a>
+          </v-row>
+        </v-col>
+        <v-spacer />
+        <v-col>
+          <v-row>
+            <Icons class="icon" icon="search" />
+            <input class="searchInput" type="text" placeholder="Pesquise seu produto...">
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-app-bar>
+    <v-app-bar
+      class="nav"
+      :color="scrolled ? '#000000bd' : 'transparent'"
+      height="70px"
+      flat
+      :fixed="scrolled"
+    >
+      <v-row class="navMenu">
+          <v-img
+            :src="require('../assets/logo/logoPrincipal.png')"
+            class="imgLogo"
+            max-width="140px"
+            :class="scrolled ? 'whiteLogo' : ''"
+          />
+          <div class="lineTransition">
+            <div class="navMenuItem">
+              <Icons class="icon navMenuItemIcon" icon="produtos" />
+              <span>Produtos</span>
+            </div>
+          </div>
+          <div class="lineTransition">
+            <div class="navMenuItem">
+              <Icons class="icon navMenuItemIcon" icon="novidades" />
+              <span>Novidades</span>
+            </div>
+          </div>
+          <div>
+            <v-menu
+              open-on-hover
+              bottom
+              offset-y
+              flat
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <div class="lineTransition">
+                  <div
+                    class="navMenuItem"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <Icons class="icon navMenuItemIcon" icon="sobre" />
+                    <span>Sobre</span>
+                  </div>
+                </div>
+              </template>
+
+              <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
+                <v-list-item>
+                  <div class="lineTransition">
+                    <div class="navMenuItem sobreItem">
+                      <span>Sobre a Bloco</span>
+                    </div>
+                  </div>
+                </v-list-item>
+                <v-list-item>
+                  <div class="lineTransition" @click="showTabela = true">
+                    <div class="navMenuItem sobreItem">
+                      <span>Tabela de Tamanhos</span>
+                    </div>
+                  </div>
+                </v-list-item>
+                <v-list-item>
+                  <div class="lineTransition" @click="showTrocas = true">
+                    <div class="navMenuItem sobreItem">
+                      <span>Trocas e Devoluções</span>
+                    </div>
+                  </div>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
           <v-spacer />
-          <v-col>
-            <v-row>
-              <Icons class="icon" icon="search" />
-              <input class="searchInput" type="text" placeholder="Pesquise seu produto...">
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-app-bar>
-      <v-app-bar
-        class="nav"
-        :color="scrolled ? '#000000bd' : 'transparent'"
-        height="70px"
-        flat
-        :fixed="scrolled"
-      >
-        <v-row class="navMenu">
-            <v-img
-              :src="require('../assets/logo/logoPrincipal.png')"
-              class="imgLogo"
-              max-width="140px"
-              :class="scrolled ? 'whiteLogo' : ''"
-            />
-            <div class="lineTransition">
-              <div class="navMenuItem">
-                <Icons class="icon navMenuItemIcon" icon="produtos" />
-                <span>Produtos</span>
-              </div>
+          <div class="lineTransition">
+            <div class="navMenuItem">
+              <Icons class="icon navMenuItemIcon" icon="contato" />
+              <span>Contato</span>
             </div>
-            <div class="lineTransition">
-              <div class="navMenuItem">
-                <Icons class="icon navMenuItemIcon" icon="novidades" />
-                <span>Novidades</span>
-              </div>
+          </div>
+          <div class="divider" />
+          <div v-if="!logado" class="lineTransition">
+            <div class="navMenuItem">
+              <Icons class="icon navMenuItemIcon" icon="login" />
+              <span>Entrar</span>
             </div>
-            <div>
-              <v-menu
-                open-on-hover
-                bottom
-                offset-y
-                flat
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <div class="lineTransition">
-                    <div
-                      class="navMenuItem"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <Icons class="icon navMenuItemIcon" icon="sobre" />
-                      <span>Sobre</span>
+          </div>
+          <div v-if="logado">
+            <v-menu
+              open-on-hover
+              bottom
+              offset-y
+              flat
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <div class="lineTransition">
+                  <div
+                    class="navMenuItem"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    <Icons class="icon navMenuItemIcon" icon="conta" />
+                    <span>Conta</span>
+                  </div>
+                </div>
+              </template>
+
+              <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
+                <v-list-item>
+                  <div>
+                    <div class="navMenuItem sobreItem">
+                      <span>{{email}}</span>
                     </div>
                   </div>
-                </template>
-
-                <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
-                  <v-list-item>
-                    <div class="lineTransition">
-                      <div class="navMenuItem sobreItem">
-                        <span>Sobre a Bloco</span>
-                      </div>
-                    </div>
-                  </v-list-item>
-                  <v-list-item>
-                    <div class="lineTransition">
-                      <div class="navMenuItem sobreItem">
-                        <span>Tabela de Tamanhos</span>
-                      </div>
-                    </div>
-                  </v-list-item>
-                  <v-list-item>
-                    <div class="lineTransition">
-                      <div class="navMenuItem sobreItem">
-                        <span>Trocas e Devoluções</span>
-                      </div>
-                    </div>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-            <v-spacer />
-            <div class="lineTransition">
-              <div class="navMenuItem">
-                <Icons class="icon navMenuItemIcon" icon="contato" />
-                <span>Contato</span>
-              </div>
-            </div>
-            <div class="divider" />
-            <div v-if="!logado" class="lineTransition">
-              <div class="navMenuItem">
-                <Icons class="icon navMenuItemIcon" icon="login" />
-                <span>Entrar</span>
-              </div>
-            </div>
-            <div v-if="logado">
-              <v-menu
-                open-on-hover
-                bottom
-                offset-y
-                flat
-              >
-                <template v-slot:activator="{ on, attrs }">
+                </v-list-item>
+                <v-list-item>
                   <div class="lineTransition">
-                    <div
-                      class="navMenuItem"
-                      v-bind="attrs"
-                      v-on="on"
-                    >
-                      <Icons class="icon navMenuItemIcon" icon="conta" />
-                      <span>Conta</span>
+                    <div class="navMenuItem sobreItem">
+                      <Icons class="icon navMenuItemIcon" icon="login" />
+                      <span>Logout</span>
                     </div>
                   </div>
-                </template>
-
-                <v-list class="sobreMenu" flat :color="scrolled ? '#000000bd' : '#ffffff12'">
-                  <v-list-item>
-                    <div>
-                      <div class="navMenuItem sobreItem">
-                        <span>{{email}}</span>
-                      </div>
-                    </div>
-                  </v-list-item>
-                  <v-list-item>
-                    <div class="lineTransition">
-                      <div class="navMenuItem sobreItem">
-                        <Icons class="icon navMenuItemIcon" icon="login" />
-                        <span>Logout</span>
-                      </div>
-                    </div>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-        </v-row>
-      </v-app-bar>
-    </v-col>
-  </v-row>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
+      </v-row>
+    </v-app-bar>
+    <div v-if="scrolled" style="height: 70px"></div>
+    <TabelaTamanhos v-model="showTabela" />
+    <Trocas v-model="showTrocas" />
+  </div>
 </template>
 
 <script>
 
+import TabelaTamanhos from '~/components/dialogs/tabela.vue'
+import Trocas from '~/components/dialogs/trocas.vue'
 import Icons from '~/components/icons.vue'
 
 export default {
   components: {
+    TabelaTamanhos,
+    Trocas,
     Icons
   },
   data() {
     return {
+      showTabela: false,
+      showTrocas: false,
       scrolled: false,
       logado: false,
       email: "hacmelo@gmail.com",
