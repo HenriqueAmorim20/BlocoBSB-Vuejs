@@ -47,6 +47,10 @@ export default {
     content: url('https://api.iconify.design/carbon/login.svg?color=white');
   }
 
+  .loginPreto {
+    content: url('https://api.iconify.design/carbon/login.svg?color=black');
+  }
+
   .conta {
     content: url('https://api.iconify.design/codicon/account.svg?color=white');
   }

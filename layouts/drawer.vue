@@ -19,13 +19,10 @@
     <v-navigation-drawer
       app
       v-model="drawer"
-      absolute
-      temporary
-      clipped
       width="250px"
       style="background: #000000ff !important; margin-top: 55px"
     >
-      <v-list app>
+      <v-list>
         <v-list-item-group>
           <v-list-item to="/" link class="menuItem">
             <v-list-item-action>

@@ -1,15 +1,15 @@
 
 <template>
-  <v-snackbar v-model="show" :color="color" right elevation="6" app>
-    <v-row justify="center" align="center" style="padding: 1rem 0.5rem 1rem 1.5rem;">
-      <Icons class="alertIcon" :icon="icon"/>
-      <span style="font-size: 1.1rem">
-        {{ message }}
-      </span>
+  <v-snackbar v-model="show" :color="color" elevation="6" app>
+    <v-row align="center">
+      <v-col>
+        <Icons class="alertIcon" :icon="icon"/>
+      </v-col>
+      {{ message }}
       <v-spacer />
-      <div  @click="show = false">
+      <v-col  @click="show = false">
         <Icons class="icon" icon="close"/>
-      </div>
+      </v-col>
     </v-row>
   </v-snackbar>
 </template>
@@ -48,12 +48,8 @@ export default {
 
 <style scoped>
   .icon {
-    width: 25px;
-    margin-left: 15px;
+    width: 20px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: 0.3s all ease;
   }
 
@@ -65,7 +61,6 @@ export default {
 
   .alertIcon {
     width: 25px;
-    margin-right: 15px;
     background: transparent !important;
   }
 

@@ -36,8 +36,7 @@
       </v-row>
     </v-app-bar>
     <v-app-bar
-      class="nav"
-      :color="scrolled ? '#000000bd' : 'transparent'"
+      :class="scrolled ? 'navScrolled' : 'nav'"
       height="70px"
       flat
       :fixed="scrolled"
@@ -82,7 +81,7 @@
           <v-list
             class="sobreMenu"
             flat
-            :color="scrolled ? '#000000bd' : '#ffffff12'"
+            :color="scrolled ? '#000000' : '#2e5870aa'"
           >
             <v-list-item>
               <NuxtLink
@@ -146,7 +145,7 @@
           <v-list
             class="sobreMenu"
             flat
-            :color="scrolled ? '#000000bd' : '#ffffff12'"
+            :color="scrolled ? '#000000' : '#2e5870aa'"
           >
             <v-list-item>
               <NuxtLink
@@ -257,6 +256,15 @@ export default {
   cursor: pointer;
   border: 1px solid black;
   margin-left: 15px;
+  border-radius: 5px;
+}
+
+.nav {
+  background: transparent !important;
+}
+
+.navScrolled {
+  background: #000000 !important;
 }
 
 .navMenu {
@@ -293,7 +301,7 @@ export default {
 }
 
 .divider {
-  height: 30px;
+  height: 20px;
   border-left: 1px solid #ffffff;
   margin: 0px 10px;
 }

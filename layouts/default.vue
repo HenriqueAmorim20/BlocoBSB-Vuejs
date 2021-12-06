@@ -54,7 +54,6 @@ export default {
 
 <style>
  .window {
-   height: 150vh;
     background-size: cover !important;
     background-position: 0% 5% !important;
     background-attachment: fixed !important;

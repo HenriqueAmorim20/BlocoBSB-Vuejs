@@ -39,7 +39,7 @@
               icon="wpp"
             />
           </a>
-          <a href="https://instagram.com/blocobsb" target="_blank">
+          <a href="https://instagram.com/bloco.bsb" target="_blank">
             <Icons
               class="mediaIcon"
               icon="insta"
@@ -58,7 +58,7 @@
         </v-row>
         <v-row align="center" justify="center">
             <input class="emailInput" type="text" placeholder="Insira seu email..." v-model="email">
-            <v-btn dark class="participar" @click="cadastrarEmail()">Participar</v-btn>
+            <v-btn height="35px" dark class="participar" @click="cadastrarEmail()">Participar</v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -107,6 +107,7 @@ export default {
     },
 
     async cadastrarEmail () {
+      if (!this.email || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email))) return this.$alert.info('Insira um email válido!')
       try {
         // const result = await this.$axios.$post('/newsletter', { email: this.email })
         this.$alert.success('Agora você receberá nossas novidades!')
@@ -157,6 +158,7 @@ export default {
   border: 1px solid black;
   margin-left: 15px;
   background-color: #ffffffab;
+  border-radius: 5px;
 }
 .icon {
   margin-right: 7px;
@@ -186,7 +188,7 @@ export default {
   color: white;
   border-radius: 5px;
   width: 250px;
-  height: 30px;
+  height: 35px;
   padding: 2px 10px;
   font-size: 14px;
 }
@@ -211,6 +213,8 @@ export default {
 .newsletterTitle {
   font-size: 1.3rem;
   font-weight: 300;
+  border-left: 9px solid white;
+  padding: 0 12px;
 }
 
 .participar {
