@@ -23,6 +23,11 @@ export default {
   css: [
   ],
 
+  axios: {
+    baseURL: 'https://blocobsb.com.br/api',
+    // baseURL: 'http://localhost:4044/api'
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/alert.js' },
@@ -41,6 +46,7 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios'
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
