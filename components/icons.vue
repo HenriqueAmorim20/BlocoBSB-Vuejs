@@ -90,4 +90,16 @@ export default {
   .home {
     content: url('https://api.iconify.design/ant-design/home-filled.svg?color=white');
   }
+
+  .destaque {
+    content: url('https://api.iconify.design/akar-icons/star.svg?color=black');
+  }
+
+  .editar {
+    content: url('https://api.iconify.design/akar-icons/edit.svg?color=black');
+  }
+
+  .apagar {
+    content: url('https://api.iconify.design/ant-design/delete-filled.svg?color=%23dd6161');
+  }
 </style>
