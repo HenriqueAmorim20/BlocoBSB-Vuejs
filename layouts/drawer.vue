@@ -177,7 +177,6 @@ export default {
 .searchInput {
   background-color: rgba(255, 255, 255, 0.226);
   color: white;
-  border-radius: 5px;
   width: 85%;
   height: 30px;
   padding: 2px 10px;

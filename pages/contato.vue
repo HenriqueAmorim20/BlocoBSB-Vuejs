@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col align="center">
-      <v-card class="card">
+      <v-card tile class="card">
         <v-col align="start">
           <span class="title">Mande uma mensagem!</span>
         </v-col>
@@ -15,6 +15,8 @@
                   clearable
                   filled
                   dense
+                  solo
+                  tile
                   background-color="#00000022"
                   color="white"
                   placeholder="joseribeiro@gmail.com"
@@ -29,6 +31,7 @@
                   clearable
                   filled
                   dense
+                  solo
                   background-color="#00000022"
                   color="white"
                   placeholder="José Ribeiro da Silva"
@@ -44,6 +47,7 @@
                   clearable
                   filled
                   dense
+                  solo
                   background-color="#00000022"
                   color="white"
                   placeholder="Compra de camisetas"
@@ -61,6 +65,7 @@
                   color="white"
                   placeholder="Olá, tudo bem? gostaria de saber se é possível comprar várias camisetas de uma vez."
                   clearable
+                  solo
                   required
                   class="formfield"
                 />
@@ -68,7 +73,7 @@
             </v-row>
             <v-row class="linha">
               <v-col align="end">
-                <v-btn class="btn" dark type="submit">Enviar</v-btn>
+                <v-btn tile class="btn" dark type="submit">Enviar</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -116,7 +121,7 @@ export default {
 
 .title {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem !important;
   font-weight: 300;
   border-left: 9px solid #000;
   color: #000;

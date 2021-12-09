@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col justify="center">
-      <v-card class="card">
+    <v-col  justify="center" align="center">
+      <v-card tile class="card">
         <v-row>
           <v-col align="start">
             <span class="title">Sobre a nossa marca</span>
@@ -50,7 +50,7 @@
 
   .title {
     text-align: center;
-    font-size: 1.4rem;
+    font-size: 1.4rem !important;
     font-weight: 300;
     border-left: 9px solid #000;
     color: #000;
@@ -77,8 +77,6 @@
   }
   .imgSobre {
     max-width: 500px;
-    border: 1px solid rgba(128, 128, 128, 0.356);
-    border-radius: 10px;
     box-shadow: 7px 4px 4px rgba(0, 0, 0, 0.274);
   }
 </style>

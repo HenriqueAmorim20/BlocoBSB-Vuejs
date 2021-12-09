@@ -10,8 +10,8 @@
       </v-col>
       <v-col class="section" style="min-width: 200px; max-width: 200px;">
         <p>Instituicional</p>
-        <span class="clickable" to="/sobre" link >Sobre a bloco</span>
-        <span class="clickable" to="/contato" link >Contato</span>
+        <NuxtLink class="clickable" to="/sobre" link >Sobre a bloco</NuxtLink>
+        <NuxtLink class="clickable" to="/contato" link >Contato</NuxtLink>
         <span class="clickable" @click="showTrocas = true">Trocas e Devoluções</span>
         <span class="clickable" @click="showTabela = true">Tabela de Tamanhos</span>
       </v-col>
@@ -58,7 +58,7 @@
         </v-row>
         <v-row align="center" justify="center">
             <input class="emailInput" type="text" placeholder="Insira seu email..." v-model="email">
-            <v-btn height="35px" dark class="participar" @click="cadastrarEmail()">Participar</v-btn>
+            <v-btn tile height="35px" dark class="participar" @click="cadastrarEmail()">Participar</v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -123,6 +123,9 @@ export default {
 
 .clickable {
   cursor: pointer;
+  text-decoration: none;
+  color: white;
+  margin: 0;
 }
 
 .clickable:hover {
@@ -186,7 +189,6 @@ export default {
 .emailInput {
   background-color: rgba(255, 255, 255, 0.226);
   color: white;
-  border-radius: 5px;
   width: 250px;
   height: 35px;
   padding: 2px 10px;

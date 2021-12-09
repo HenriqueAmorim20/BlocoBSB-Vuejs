@@ -1,7 +1,7 @@
 <template>
   <v-row>
     <v-col align="center">
-      <v-card class="card">
+      <v-card tile class="card">
         <v-col style="display: flex; align-itens: center; flex-wrap: wrap">
           <span class="title">Olá, {{user.nome}}</span>
           <v-spacer />
@@ -55,7 +55,7 @@
                 </v-row>
                 <v-row class="linha">
                   <v-col align="end">
-                    <v-btn class="btn" dark type="submit">Salvar</v-btn>
+                    <v-btn tile class="btn" dark type="submit">Salvar</v-btn>
                   </v-col>
                 </v-row>
               </v-form>
@@ -153,7 +153,7 @@ export default {
 
 .title {
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.3rem !important;
   font-weight: 300;
   border-left: 9px solid #000;
   color: #000;

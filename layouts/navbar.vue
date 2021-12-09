@@ -241,7 +241,6 @@ export default {
 .searchInput {
   background-color: rgba(255, 255, 255, 0.226);
   color: white;
-  border-radius: 5px;
   width: 90%;
   height: 30px;
   padding: 2px 10px;
@@ -254,9 +253,8 @@ export default {
 
 .imgLogo {
   cursor: pointer;
-  border: 1px solid black;
   margin-left: 15px;
-  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .nav {
@@ -308,6 +306,7 @@ export default {
 
 .whiteLogo {
   background-color: #ffffffab;
+   margin-bottom: 0px;
 }
 
 ::placeholder {
