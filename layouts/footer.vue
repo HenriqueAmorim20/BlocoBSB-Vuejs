@@ -136,7 +136,7 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
-  background-color: black !important;
+  background-color: rgb(0, 0, 0) !important;
 }
 
 .section {
@@ -160,8 +160,7 @@ export default {
 .imgLogo {
   border: 1px solid black;
   margin-left: 15px;
-  background-color: #ffffffab;
-  border-radius: 5px;
+  background-color: #ffffff;
 }
 .icon {
   margin-right: 7px;

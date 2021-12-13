@@ -1,116 +1,126 @@
 <template>
-  <v-row>
-    <v-col align="center">
-      <v-card tile class="card">
-        <v-col style="display: flex; align-itens: center; flex-wrap: wrap">
-          <span class="title">Olá, {{user.nome}}</span>
-          <v-spacer />
-          <div class="lineTransition" @click="logout()">
-            <div class="logout">
-              <Icons class="icon" icon="loginPreto" />
-              <span>Logout</span>
+  <v-container>
+    <v-row justify="center" align="center">
+      <v-col align="center">
+        <v-card tile class="card">
+          <v-col style="display: flex; align-itens: center; flex-wrap: wrap">
+            <span class="title">Olá, {{ user.nome }}</span>
+            <v-spacer />
+            <div class="lineTransition" @click="logout()">
+              <div class="logout">
+                <Icons class="icon" icon="loginPreto" />
+                <span>Logout</span>
+              </div>
             </div>
-          </div>
-        </v-col>
-        <v-tabs v-model="tab" background-color="transparent" color="black" grow height="30px">
-          <v-tab class="tab">Meus dados</v-tab>
-          <v-tab class="tab">Meus pedidos</v-tab>
-          <v-tab v-if="admin" class="tab">Mensagens</v-tab>
-          <v-tab v-if="admin" class="tab">Newsletter</v-tab>
-        </v-tabs>
-        <v-tabs-items v-model="tab" style="background: transparent !important; margin-top: 15px">
-          <v-tab-item>
-            <v-col align="start">
-              <span class="text"><b>Email autenticado:</b> {{user.email}}</span>
-            </v-col>
-            <v-col>
-              <v-form @submit.prevent="salvar()">
-                <v-row class="linha">
-                  <v-col align="start">
-                    <span>Nome *</span>
-                    <v-text-field
-                      v-model="user.nome"
-                      clearable
-                      filled
-                      dense
-                      background-color="#00000022"
-                      color="white"
-                      required
-                      class="formfield"
-                    />
-                  </v-col>
-                  <v-col align="start">
-                    <span>Telefone</span>
-                    <v-text-field
-                      v-model="user.telefone"
-                      clearable
-                      filled
-                      dense
-                      background-color="#00000022"
-                      color="white"
-                      placeholder="61 985270234"
-                      class="formfield"
-                    />
-                  </v-col>
-                </v-row>
-                <v-row class="linha">
-                  <v-col align="end">
-                    <v-btn tile class="btn" dark type="submit">Salvar</v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-col>
-          </v-tab-item>
-          <v-tab-item>
-            Em breve você também poderá vizualizar e gerenciar seus pedidos por aqui :)
-          </v-tab-item>
-          <v-tab-item>
-            Mensagens
-          </v-tab-item>
-          <v-tab-item>
-            Newsletter
-          </v-tab-item>
-        </v-tabs-items>
-      </v-card>
-    </v-col>
-  </v-row>
+          </v-col>
+          <v-tabs
+            v-model="tab"
+            background-color="transparent"
+            color="black"
+            grow
+            height="30px"
+          >
+            <v-tab class="tab">Meus dados</v-tab>
+            <v-tab class="tab">Meus pedidos</v-tab>
+            <v-tab v-if="admin" class="tab">Mensagens</v-tab>
+            <v-tab v-if="admin" class="tab">Newsletter</v-tab>
+          </v-tabs>
+          <v-tabs-items
+            v-model="tab"
+            style="background: transparent !important; margin-top: 15px"
+          >
+            <v-tab-item>
+              <v-col align="start">
+                <span class="text"
+                  ><b>Email autenticado:</b> {{ user.email }}</span
+                >
+              </v-col>
+              <v-col>
+                <v-form @submit.prevent="salvar()">
+                  <v-row class="linha">
+                    <v-col align="start">
+                      <span>Nome *</span>
+                      <v-text-field
+                        v-model="user.nome"
+                        clearable
+                        filled
+                        dense
+                        background-color="#00000022"
+                        color="white"
+                        required
+                        class="formfield"
+                      />
+                    </v-col>
+                    <v-col align="start">
+                      <span>Telefone</span>
+                      <v-text-field
+                        v-model="user.telefone"
+                        clearable
+                        filled
+                        dense
+                        background-color="#00000022"
+                        color="white"
+                        placeholder="61 985270234"
+                        class="formfield"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row class="linha">
+                    <v-col align="end">
+                      <v-btn tile class="btn" dark type="submit">Salvar</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-col>
+            </v-tab-item>
+            <v-tab-item>
+              Em breve você também poderá vizualizar e gerenciar seus pedidos
+              por aqui :)
+            </v-tab-item>
+            <v-tab-item> Mensagens </v-tab-item>
+            <v-tab-item> Newsletter </v-tab-item>
+          </v-tabs-items>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
-
 import Icons from "~/components/icons.vue";
 
 export default {
   components: {
-    Icons
+    Icons,
   },
   data() {
     return {
       tab: null,
       admin: false,
       user: {
-        email: 'hacmelo@gmail.com',
-        nome: 'Henrique Amorim',
-        telefone: '61 985270234',
-      }
-    }
+        email: "hacmelo@gmail.com",
+        nome: "Henrique Amorim",
+        telefone: "61 985270234",
+      },
+    };
   },
   methods: {
-    salvar () {
-      if (!this.user.nome) return this.$alert.info('Campos obrigatórios inválidos!')
+    salvar() {
+      if (!this.user.nome)
+        return this.$alert.info("Campos obrigatórios inválidos!");
       try {
-        console.log(this.user)
-        this.$alert.success('Dados atualizados!')
+        console.log(this.user);
+        this.$alert.success("Dados atualizados!");
       } catch (error) {
-        this.$alert.error('Não foi possível atualizar seus dados!')
+        this.$alert.error("Não foi possível atualizar seus dados!");
       }
     },
 
-    logout () {
-      console.log('logout')
-    }
-  }
-}
+    logout() {
+      console.log("logout");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -118,7 +128,7 @@ export default {
   color: black;
   min-height: 50vh;
   max-width: 700px;
-  background: rgba(255, 255, 255, 0.705);
+  background-color: rgba(255, 255, 255, 0.226);
   margin: 1rem 0;
 }
 
@@ -186,7 +196,7 @@ export default {
 
 .btn {
   width: 200px;
-  box-shadow: inset 0px 0px 0px #2F3B47;
+  box-shadow: inset 0px 0px 0px #2f3b47;
   transition: all 0.5s !important;
 }
 .btn:hover {

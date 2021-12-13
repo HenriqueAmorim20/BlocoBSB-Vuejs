@@ -1,147 +1,156 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col justify="center" align="center">
-      <v-card tile class="card">
-        <v-row v-if="width <= 800" style="margin-bottom: 0.5rem">
-          <v-col align="start">
-            <span class="title">{{ produto.nome }}</span>
-          </v-col>
-        </v-row>
-        <v-row class="wrap">
-          <v-col
-            align="start"
-            :cols="width > 800 ? 5 : 12"
-            style="min-width: 280px"
-          >
-            <v-row v-if="width > 800" style="margin-bottom: 0.5rem">
-              <v-col align="start">
-                <span class="title">{{ produto.nome }}</span>
-              </v-col>
-            </v-row>
-            <v-row class="texts" style="font-size: 1.5rem !important">
-              <v-col>
-                <span>R$ {{ produto.preco }}</span>
-              </v-col>
-            </v-row>
-            <v-row class="texts">
-              <v-col>
-                <span style="text-transform: capitalize">{{
-                  produto.tipo
-                }}</span>
-              </v-col>
-            </v-row>
-            <v-row class="texts">
-              <v-col>
-                <span>{{ produto.descricao }}</span>
-              </v-col>
-            </v-row>
-            <v-row class="texts">
-              <v-col align="center">
-                <span
-                  @click="showTabela = true"
-                  style="text-decoration: underline; cursor: pointer"
-                  >Confira aqui a tabela de tamanhos!</span
-                >
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col align="center" justify="center">
-                <v-text-field
-                  v-model="quantidade"
-                  filled
-                  outlined
-                  light
-                  min="1"
-                  max="50"
-                  color="black"
-                  hide-details
-                  dense
-                  style="width: 100px;"
-                  label="Qtd."
-                  type="number"
-                />
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col align="center">
-                <a
-                  :href="`https://wa.me/5561981889864?text=${getMensagem()}`"
-                  target="_blank"
-                  style="width: fit-content; text-decoration: none"
-                >
-                  <v-btn tile class="btnComprar">
-                    <v-row align="center">
-                      <v-col>
-                        <span>Comprar agora</span>
-                      </v-col>
-                      <v-col>
-                        <v-icon class="iconComprar"> mdi-arrow-right </v-icon>
-                      </v-col>
-                    </v-row>
-                  </v-btn>
-                </a>
-              </v-col>
-            </v-row>
-          </v-col>
-          <v-col
-            justify="start"
-            :cols="width > 800 ? 7 : 12"
-            :style="
-              width > 800
-                ? ''
-                : 'min-width: 280px; margin: 0 !important; padding: 0 !important;'
-            "
-          >
-            <v-row>
-              <v-col justify="start" align="start">
-                <v-img
-                  class="img"
-                  @loadstart="loading = true"
-                  :aspect-ratio="1"
-                  @load="loading = false"
-                  :src="currImg"
-                >
-                  <v-btn
-                    v-if="index !== 0"
-                    style="
-                      position: absolute;
-                      left: 0;
-                      bottom: 0;
-                      background: #ffffffab;
-                    "
-                    text
-                    tile
-                    color="#000"
-                    @click="prevImg()"
+  <v-container>
+    <v-row justify="center" align="center">
+      <v-col justify="center" align="center">
+        <v-card :loading="loading" tile class="card">
+          <v-row v-if="width <= 800 && !loading" style="margin-bottom: 0.5rem">
+            <v-col align="start">
+              <span class="title">{{ produto.nome }}</span>
+            </v-col>
+          </v-row>
+          <v-row class="wrap">
+            <v-col
+              align="start"
+              :cols="width > 800 ? 5 : 12"
+              style="min-width: 280px"
+            >
+              <v-row
+                v-if="width > 800 && !loading"
+                style="margin-bottom: 0.5rem"
+              >
+                <v-col align="start">
+                  <span class="title">{{ produto.nome }}</span>
+                </v-col>
+              </v-row>
+              <v-row
+                v-if="!loading"
+                class="texts"
+                style="font-size: 1.5rem !important"
+              >
+                <v-col>
+                  <span>R$ {{ produto.preco }}</span>
+                </v-col>
+              </v-row>
+              <v-row v-if="!loading" class="texts">
+                <v-col>
+                  <span style="text-transform: capitalize">{{
+                    produto.tipo
+                  }}</span>
+                </v-col>
+              </v-row>
+              <v-row v-if="!loading" class="texts">
+                <v-col>
+                  <span>{{ produto.descricao }}</span>
+                </v-col>
+              </v-row>
+              <v-row v-if="!loading" class="texts">
+                <v-col align="center">
+                  <span
+                    @click="showTabela = true"
+                    style="text-decoration: underline; cursor: pointer"
+                    >Confira aqui a tabela de tamanhos!</span
                   >
-                    <v-icon>mdi-arrow-left</v-icon>
-                    <span>Prev</span>
-                  </v-btn>
-                  <v-btn
-                    v-if="index !== produto.urlImagens.length - 1"
-                    style="
-                      position: absolute;
-                      right: 0;
-                      bottom: 0;
-                      background: #ffffffab;
-                    "
-                    text
-                    tile
-                    color="#000"
-                    @click="nextImg()"
+                </v-col>
+              </v-row>
+              <v-row v-if="!loading">
+                <v-col align="center" justify="center">
+                  <v-text-field
+                    v-model="quantidade"
+                    filled
+                    outlined
+                    light
+                    min="1"
+                    max="50"
+                    color="black"
+                    hide-details
+                    dense
+                    style="width: 100px"
+                    label="Qtd."
+                    type="number"
+                  />
+                </v-col>
+              </v-row>
+              <v-row v-if="!loading">
+                <v-col align="center">
+                  <a
+                    :href="`https://wa.me/5561981889864?text=${getMensagem()}`"
+                    target="_blank"
+                    style="width: fit-content; text-decoration: none"
                   >
-                    <span>Prox</span>
-                    <v-icon>mdi-arrow-right</v-icon>
-                  </v-btn>
-                </v-img>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-      </v-card>
-    </v-col>
-    <TabelaTamanhos v-model="showTabela" />
-  </v-row>
+                    <v-btn tile class="btnComprar">
+                      <v-row align="center">
+                        <v-col>
+                          <span>Comprar agora</span>
+                        </v-col>
+                        <v-col>
+                          <v-icon class="iconComprar"> mdi-arrow-right </v-icon>
+                        </v-col>
+                      </v-row>
+                    </v-btn>
+                  </a>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-col
+              justify="start"
+              :cols="width > 800 ? 7 : 12"
+              :style="
+                width > 800
+                  ? ''
+                  : 'min-width: 280px; margin: 0 !important; padding: 0 !important;'
+              "
+            >
+              <v-row :loading="loadingImg">
+                <v-col justify="start" align="start">
+                  <v-img
+                    class="img"
+                    @loadstart="loadingImg = true"
+                    :aspect-ratio="1"
+                    @load="loadingImg = false"
+                    :src="currImg"
+                  >
+                    <v-btn
+                      v-if="index !== 0 && !loading"
+                      style="
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                        background: #ffffffab;
+                      "
+                      text
+                      tile
+                      color="#000"
+                      @click="prevImg()"
+                    >
+                      <v-icon>mdi-arrow-left</v-icon>
+                      <span>Prev</span>
+                    </v-btn>
+                    <v-btn
+                      v-if="index !== produto.urlImagens.length - 1 && !loading"
+                      style="
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        background: #ffffffab;
+                      "
+                      text
+                      tile
+                      color="#000"
+                      @click="nextImg()"
+                    >
+                      <span>Prox</span>
+                      <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                  </v-img>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+      <TabelaTamanhos v-model="showTabela" />
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -153,6 +162,8 @@ export default {
   },
   data() {
     return {
+      loadingImg: true,
+      loading: true,
       user: null,
       showTabela: false,
       loading: true,
@@ -181,14 +192,16 @@ export default {
 
   methods: {
     async getProduto() {
+      this.loading = true;
       const id = this.$route.params.id;
       try {
         this.produto = await this.$axios.$get(`/produto/${id}`);
         this.currImg = this.produto.urlImagens[this.index];
       } catch (error) {
-        console.log(error)
-        this.$router.push("/produtos/")
+        console.log(error);
+        this.$router.push("/produtos/");
       }
+      this.loading = false;
     },
 
     nextImg() {
@@ -204,10 +217,10 @@ export default {
     },
 
     getMensagem() {
-      let mensagem = "Olá, tudo bem? "
-      if (this.user) mensagem += `Me chamo ${this.user.nome}! `
-      mensagem += `Gostaria de comprar ${this.quantidade} unidade(s) da camisa ${this.produto.nome}, tem disponível?`
-      return mensagem
+      let mensagem = "Olá, tudo bem? ";
+      if (this.user) mensagem += `Me chamo ${this.user.nome}! `;
+      mensagem += `Gostaria de comprar ${this.quantidade} unidade(s) da camisa ${this.produto.nome}, tem disponível?`;
+      return mensagem;
     },
   },
 };

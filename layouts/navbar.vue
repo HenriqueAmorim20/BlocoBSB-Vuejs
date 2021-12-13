@@ -36,10 +36,9 @@
       </v-row>
     </v-app-bar>
     <v-app-bar
-      :class="scrolled ? 'navScrolled' : 'nav'"
+      class="nav"
       height="70px"
       flat
-      :fixed="scrolled"
     >
       <v-row class="navMenu">
         <NuxtLink to="/">
@@ -47,7 +46,6 @@
             :src="require('../assets/logo/logoPrincipal.png')"
             class="imgLogo"
             max-width="140px"
-            :class="scrolled ? 'whiteLogo' : ''"
           />
         </NuxtLink>
 
@@ -68,7 +66,7 @@
             <span>Novidades</span>
           </div>
         </div>
-        <v-menu open-on-hover bottom offset-y flat>
+        <v-menu open-on-hover bottom offset-y flat transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
             <div class="lineTransition">
               <div class="navMenuItem" v-bind="attrs" v-on="on">
@@ -81,7 +79,7 @@
           <v-list
             class="sobreMenu"
             flat
-            :color="scrolled ? '#000000' : '#2e5870aa'"
+            color="#2F3B47dd"
           >
             <v-list-item>
               <NuxtLink
@@ -122,13 +120,13 @@
           </div>
         </NuxtLink>
         <div class="divider" />
-        <div v-if="!logado" class="lineTransition" @click="login()">
+        <div v-if="!user.email" class="lineTransition" @click="login()">
           <div class="navMenuItem">
             <Icons class="icon navMenuItemIcon" icon="login" />
             <span>Entrar</span>
           </div>
         </div>
-        <v-menu v-if="logado" open-on-hover bottom offset-y flat>
+        <v-menu v-if="user.email" open-on-hover bottom offset-y flat transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
             <NuxtLink
               class="lineTransition"
@@ -145,7 +143,7 @@
           <v-list
             class="sobreMenu"
             flat
-            :color="scrolled ? '#000000' : '#2e5870aa'"
+            color="#2F3B47dd"
           >
             <v-list-item>
               <NuxtLink
@@ -153,7 +151,7 @@
                 style="text-decoration: none; color: inherit"
               >
                 <div class="navMenuItem sobreItem">
-                  <span>{{ email }}</span>
+                  <span>{{ user.email }}</span>
                 </div>
               </NuxtLink>
             </v-list-item>
@@ -169,7 +167,6 @@
         </v-menu>
       </v-row>
     </v-app-bar>
-    <div v-if="scrolled" style="height: 70px"></div>
     <TabelaTamanhos v-model="showTabela" />
     <Trocas v-model="showTrocas" />
   </div>
@@ -191,8 +188,9 @@ export default {
       showTabela: false,
       showTrocas: false,
       scrolled: false,
-      logado: true,
-      email: "hacmelo@gmail.com",
+      user: {
+        email: ""
+      },
     };
   },
   mounted() {
@@ -207,7 +205,7 @@ export default {
     },
 
     login() {
-      console.log("login");
+      this.$router.push("/autenticar")
     },
 
     logout() {

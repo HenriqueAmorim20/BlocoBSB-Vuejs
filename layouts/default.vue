@@ -1,12 +1,11 @@
 <template>
   <v-app class="window" :style="image">
+    <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <Navbar v-if="width > 950" />
     <Drawer v-if="width <= 950" />
     <v-main>
-      <v-container>
-        <Nuxt />
-        <Alert />
-      </v-container>
+      <Nuxt />
+      <Alert />
     </v-main>
     <Footer />
   </v-app>

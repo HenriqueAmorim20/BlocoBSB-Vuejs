@@ -1,7 +1,9 @@
 <template>
   <div>
+    <div style="height: 50px;"></div>
     <v-app-bar
-      style="background: #000000ff !important; z-index: 10"
+      style="background: #000000ff !important; z-index: 10;"
+      fixed
       max-height="55px"
       min-height="55px"
     >
@@ -102,7 +104,7 @@
             </v-list-item-content>
           </v-list-item>
           <v-list-item disabled />
-          <v-list-item v-if="!logado" link class="menuItem" @click="login()">
+          <v-list-item v-if="!user.email" link class="menuItem" @click="login()">
             <v-list-item-action>
               <Icons class="icon" icon="login" />
             </v-list-item-action>
@@ -112,7 +114,7 @@
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item v-if="logado" to="/conta" link class="menuItem">
+          <v-list-item v-if="user.email" to="/conta" link class="menuItem">
             <v-list-item-action>
               <Icons class="icon" icon="conta" />
             </v-list-item-action>
@@ -150,8 +152,9 @@ export default {
       showTabela: false,
       showTrocas: false,
       scrolled: false,
-      logado: true,
-      email: "hacmelo@gmail.com",
+      user: {
+        email: ""
+      },
     };
   },
   methods: {
@@ -160,7 +163,7 @@ export default {
     },
 
     login() {
-      console.log("login");
+      this.$router.push("/autenticar")
     },
   },
 };
