@@ -23,11 +23,8 @@ export default {
   css: [
   ],
 
-  dev: process.env.NODE_ENV !== 'production',
-
   axios: {
-    // baseURL: 'https://blocobsb.com.br/api',
-    baseURL: process.env.BASE_URL
+    baseURL: process.env.NODE_ENV ==='prod' ? "https://blocobsb.com.br/api" : "http://localhost:4044/api"
   },
 
   publicRuntimeConfig: {
