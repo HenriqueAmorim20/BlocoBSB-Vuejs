@@ -3,7 +3,7 @@
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <Navbar v-if="width > 950" />
     <Drawer v-if="width <= 950" />
-    <v-main>
+    <v-main style="padding: 0 !important">
       <Nuxt />
       <Alert />
     </v-main>
@@ -32,6 +32,7 @@ export default {
     };
   },
   mounted() {
+    this.getUser();
     this.width = window.innerWidth;
     this.$nextTick(() => {
       window.addEventListener("resize", this.onResize);
@@ -46,6 +47,13 @@ export default {
     onResize() {
       this.width = window.innerWidth;
     },
+
+    getUser() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        this.$store.dispatch("auth/LOGIN", user)
+      }
+    },
   },
 };
 </script>
@@ -53,7 +61,7 @@ export default {
 <style>
 .window {
   background-size: cover !important;
-  background-position: 0% 5% !important;
+  background-position: center 18% !important;
   background-attachment: fixed !important;
   background-repeat: no-repeat !important;
 }

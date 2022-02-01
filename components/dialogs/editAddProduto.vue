@@ -13,7 +13,7 @@
       <v-card-text>
         <v-form @submit.prevent="salvarProduto()">
           <v-row class="linha">
-            <v-col align="start" cols="9">
+            <v-col align="start" cols="7">
               <span>Nome *</span>
               <v-text-field
                 v-model="produto.nome"
@@ -27,7 +27,7 @@
                 required
               />
             </v-col>
-            <v-col align="start" cols="3">
+            <v-col align="start" cols="2">
               <span>Preço *</span>
               <v-text-field
                 v-model="produto.preco"
@@ -39,22 +39,6 @@
                 dense
                 required
                 placeholder="75,90"
-              />
-            </v-col>
-          </v-row>
-          <v-row class="linha">
-            <v-col align="start" cols="9">
-              <span>Url da miniatura *</span>
-              <v-text-field
-                v-model="produto.urlMiniatura"
-                clearable
-                solo
-                background-color="#00000022"
-                color="white"
-                filled
-                dense
-                required
-                placeholder="https://blocobsb-bucket.s3.sa-east-1.amazonaws.com/assets/produtos/miniaturas/blocoPreta.jpeg"
               />
             </v-col>
             <v-col align="start" cols="3">
@@ -69,6 +53,35 @@
                 color="white"
                 height="25px"
               ></v-select>
+            </v-col>
+          </v-row>
+          <v-row class="linha">
+            <v-col align="start" cols="6">
+              <span>Url da miniatura *</span>
+              <v-text-field
+                v-model="produto.urlMiniatura"
+                clearable
+                solo
+                background-color="#00000022"
+                color="white"
+                filled
+                dense
+                required
+                placeholder="https://blocobsb-bucket.s3.sa-east-1.amazonaws.com/assets/produtos/miniaturas/blocoPreta.jpeg"
+              />
+            </v-col>
+            <v-col align="start" cols="6">
+              <span>Url da miniatura Alternativa</span>
+              <v-text-field
+                v-model="produto.urlMiniaturaAlternativa"
+                clearable
+                solo
+                background-color="#00000022"
+                color="white"
+                filled
+                dense
+                placeholder="https://blocobsb-bucket.s3.sa-east-1.amazonaws.com/assets/produtos/miniaturas/blocoPreta.jpeg"
+              />
             </v-col>
           </v-row>
           <v-row class="linha">
@@ -174,6 +187,7 @@ export default {
         preco: "",
         tipo: "",
         urlMiniatura: "",
+        urlMiniaturaAlternativa: "",
         descricao: "",
         destaque: false,
         urlImagens: [],
@@ -208,7 +222,6 @@ export default {
       if (!this.camposValidos())
         return this.$alert.info("Campos obrigatórios não preenchidos!");
       this.loading = true;
-      console.log(this.produto);
       try {
         if (this.produto._id) {
           for (const item in this.produto) {

@@ -2,10 +2,10 @@
   <v-container>
     <v-row justify="center" align="center">
       <v-col justify="center" align="center">
-        <v-card tile class="card">
+        <v-card flat tile class="card">
           <v-row>
             <v-col align="start">
-              <span class="title">Sobre a nossa marca</span>
+              <span class="title">Sobre nós</span>
             </v-col>
           </v-row>
           <v-row>
@@ -29,7 +29,7 @@
               </p>
             </v-col>
           </v-row>
-          <v-row align="center">
+          <v-row align="center" style="flex-wrap: wrap-reverse !important;">
             <v-col align="start">
               <p>
                 Quando pensamos em Brasília, vêm à nossa cabeça diversos
@@ -54,7 +54,7 @@
 <style scoped>
 .card {
   max-width: 1200px;
-  background-color: rgba(255, 255, 255, 0.226);
+  background-color: rgba(255, 255, 255, 0.507);
   padding: 1rem;
   margin: 1rem 0;
   color: #000;
@@ -62,7 +62,7 @@
 
 .title {
   text-align: center;
-  font-size: 1.4rem !important;
+  font-size: 1.5rem !important;
   font-weight: 300;
   border-left: 9px solid #000;
   color: #000;
@@ -72,20 +72,23 @@
 
 .subtitle {
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 300;
   color: #000;
   padding: 0 12px;
   margin: 0 0.5rem;
+  padding: 0.5rem;
 }
 
 p {
-  text-indent: 2rem;
+  text-indent: 1rem;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 300;
-  padding: 0 1rem;
+  padding: 0 0.5rem;
   min-width: 240px;
+  color: #000 !important;
+  /* background: rgba(255, 255, 255, 0.281); */
 }
 .imgSobre {
   max-width: 500px;

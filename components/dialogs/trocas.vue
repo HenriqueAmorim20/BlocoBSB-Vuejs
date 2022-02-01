@@ -16,7 +16,7 @@
       <v-card-text style="margin-top: 15px">
         <p>Por favor, para evitar trocas e devoluções, caso não tenha certeza sobre um produto ou tenha alguma dúvida, entre em contato conosco: </p>
         <div>
-            <span>WhatsApp: (61) 98188-9864</span>
+            <span>WhatsApp: (61) 9368-7754</span>
             <span>Instagram: @bloco.bsb</span>
             <span>E-mail: blocobsb@gmail.com</span>
         </div>

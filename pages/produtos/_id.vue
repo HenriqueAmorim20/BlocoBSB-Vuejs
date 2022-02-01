@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center"  style="min-height : 90vh">
       <v-col justify="center" align="center">
         <v-card :loading="loading" tile class="card">
           <v-row v-if="width <= 800 && !loading" style="margin-bottom: 0.5rem">
@@ -73,7 +73,7 @@
               <v-row v-if="!loading">
                 <v-col align="center">
                   <a
-                    :href="`https://wa.me/5561981889864?text=${getMensagem()}`"
+                    :href="`https://wa.me/556193687754?text=${getMensagem()}`"
                     target="_blank"
                     style="width: fit-content; text-decoration: none"
                   >
@@ -178,6 +178,11 @@ export default {
   },
   created() {
     this.getProduto();
+    this.$store.dispatch("auth/GET").then((res) => {
+      if (res.user) {
+        this.user = res.user;
+      }
+    });
   },
   mounted() {
     this.width = window.innerWidth;
@@ -198,7 +203,7 @@ export default {
         this.produto = await this.$axios.$get(`/produto/${id}`);
         this.currImg = this.produto.urlImagens[this.index];
       } catch (error) {
-        console.log(error);
+        this.$alert.error(error);
         this.$router.push("/produtos/");
       }
       this.loading = false;

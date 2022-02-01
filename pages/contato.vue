@@ -1,80 +1,88 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row justify="center" align="center" style="min-height : 90vh">
       <v-col align="center">
         <v-card tile class="card">
           <v-col align="start">
-            <span class="title">Mande uma mensagem!</span>
+            <span class="title">Contato</span>
           </v-col>
           <v-col>
             <v-form @submit.prevent="enviarMensagem()">
               <v-row v-if="!user" class="linha">
                 <v-col align="start">
-                  <span>Email *</span>
+                  <span class="label">Email *</span>
                   <v-text-field
                     v-model="formulario.email"
+                    class="rounded-0 preencher"
                     clearable
                     filled
                     dense
                     solo
-                    tile
+                    hide-details
                     background-color="#00000022"
-                    color="white"
+                    color="#000"
+                    light
                     placeholder="joseribeiro@gmail.com"
                     required
-                    class="formfield"
                   />
                 </v-col>
                 <v-col align="start">
-                  <span>Nome</span>
+                  <span class="label">Nome</span>
                   <v-text-field
                     v-model="formulario.nome"
+                    class="rounded-0 preencher"
                     clearable
                     filled
                     dense
                     solo
+                    hide-details
                     background-color="#00000022"
-                    color="white"
+                    color="#000"
+                    light
                     placeholder="José Ribeiro da Silva"
-                    class="formfield"
                   />
                 </v-col>
               </v-row>
               <v-row class="linha">
                 <v-col align="start">
-                  <span>Assunto</span>
+                  <span class="label">Assunto</span>
                   <v-text-field
                     v-model="formulario.assunto"
+                    class="rounded-0 preencher"
                     clearable
                     filled
                     dense
                     solo
+                    hide-details
                     background-color="#00000022"
-                    color="white"
+                    color="#000"
+                    light
                     placeholder="Compra de camisetas"
-                    class="formfield"
                   />
                 </v-col>
               </v-row>
               <v-row class="linha">
                 <v-col align="start">
-                  <span>Mensagem *</span>
+                  <span class="label">Mensagem *</span>
                   <v-textarea
                     v-model="formulario.mensagem"
-                    filled
-                    background-color="#00000022"
-                    color="white"
-                    placeholder="Olá, tudo bem? gostaria de saber se é possível comprar várias camisetas de uma vez."
+                    class="rounded-0 preencher"
                     clearable
+                    filled
+                    dense
                     solo
+                    hide-details
+                    background-color="#00000022"
+                    color="#000"
+                    light
+                    placeholder="Olá, tudo bem? gostaria de saber se é possível comprar várias camisetas de uma vez."
                     required
-                    class="formfield"
                   />
                 </v-col>
               </v-row>
               <v-row class="linha">
                 <v-col align="end">
-                  <v-btn tile class="btn" dark type="submit">Enviar</v-btn>
+                  <v-btn :loading="loading" tile class="btn" dark type="submit">Enviar</v-btn>
                 </v-col>
               </v-row>
             </v-form>
@@ -89,10 +97,8 @@
 export default {
   data() {
     return {
-      user: {
-        nome: "Henrique",
-        email: "hacmelo@gmail.com",
-      },
+      loading: false,
+      user: null,
       formulario: {
         email: null,
         nome: null,
@@ -103,20 +109,37 @@ export default {
   },
 
   created() {
-    if (this.user) {
-      this.formulario.email = this.user.email;
-      this.formulario.nome = this.user.nome;
-    }
+    this.$store.dispatch("auth/GET").then((res) => {
+      if (res.user) {
+        this.user = res.user;
+        this.formulario.email = this.user.email;
+        this.formulario.nome = this.user.nome;
+      }
+    });
+  },
+  watch: {
+    "$store.state.auth.user": function () {
+      this.user = this.$store.state.auth.user;
+      this.formulario.email = this.user?.email;
+      this.formulario.nome = this.user?.nome;
+    },
   },
   methods: {
-    enviarMensagem() {
+    async enviarMensagem() {
       if (!this.validateForm())
         return this.$alert.info("Campos obrigatórios incorretos!");
+        this.loading = true
       try {
+        await this.$axios.$post("/feedback", this.formulario);
         this.$alert.success("Obrigado pela sua mensagem!");
+        this.formulario = {
+          assunto: null,
+          mensagem: null,
+        };
       } catch (error) {
         this.$alert.error("Não foi possível enviar sua mensagem!");
       }
+      this.loading = false
     },
 
     validateForm() {
@@ -136,7 +159,7 @@ export default {
 <style scoped>
 .card {
   max-width: 700px;
-  background-color: rgba(255, 255, 255, 0.226);
+  background-color: rgba(255, 255, 255, 0.657);
   margin: 1rem 0;
 }
 
@@ -159,9 +182,21 @@ export default {
   color: #000;
 }
 
-.formfield {
-  min-width: 220px;
+.label {
+  display: flex;
+  align-items: center;
+  background: #0000008f;
+  color: #fff !important;
+  padding: 0rem 0.7rem;
+  width: fit-content !important;
+  height: 30px;
   margin-top: 6px;
+}
+
+.preencher {
+  min-width: 220px;
+  margin-bottom: 6px;
+  width: 100% !important;
 }
 
 .btn {
