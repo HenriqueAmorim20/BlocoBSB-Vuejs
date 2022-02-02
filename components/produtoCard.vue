@@ -42,7 +42,7 @@
             @mouseleave="mouseLeave"
             tile
             @loadstart="loading = true"
-            @load="loading = false"
+            @load="loading = false; loaded()"
             :aspect-ratio="0.66"
             :src="miniatura"
           />
@@ -81,7 +81,10 @@
             <v-spacer />
             <v-btn
               dark
-              style="background: #dd6161 !important; padding: 0.5rem 1rem !important"
+              style="
+                background: #dd6161 !important;
+                padding: 0.5rem 1rem !important;
+              "
               @click="confirmarAcao()"
             >
               Confirmar
@@ -129,21 +132,16 @@ export default {
   created() {
     this.produto = this.item;
     this.miniatura = this.produto.urlMiniatura;
-    const image = new Image()
-    image.src = this.produto.urlMiniatura
-    const image2 = new Image()
-    image2.src = this.produto.urlImagens[0]
   },
 
   methods: {
     mouseEnter: function () {
-      if (this.produto.urlImagens.length > 1)
-        this.miniatura = this.produto.urlImagens[0];
+      if (this.produto.urlMiniaturaAlternativa)
+        this.miniatura = this.produto.urlMiniaturaAlternativa;
     },
 
     mouseLeave: function () {
-      if (this.produto.urlImagens.length > 1)
-        this.miniatura = this.produto.urlMiniatura;
+      this.miniatura = this.produto.urlMiniatura;
     },
 
     openDialog(acao) {
@@ -206,6 +204,10 @@ export default {
     detalhar() {
       this.$router.push("/produtos/" + this.produto._id);
     },
+
+    loaded() {
+      this.$emit("productLoaded")
+    }
   },
 };
 </script>
@@ -236,7 +238,7 @@ export default {
 
 .actions {
   height: 35px !important;
-  width:  fit-content !important;
+  width: fit-content !important;
   position: absolute;
   right: 0;
   background-color: #d4d4d4c4;

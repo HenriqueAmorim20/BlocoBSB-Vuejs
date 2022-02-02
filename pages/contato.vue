@@ -1,121 +1,165 @@
 <template>
-  <v-row>
-    <v-col align="center">
-      <v-card tile class="card">
-        <v-col align="start">
-          <span class="title">Mande uma mensagem!</span>
-        </v-col>
-        <v-col>
-          <v-form @submit.prevent="enviarMensagem()">
-            <v-row class="linha">
-              <v-col align="start">
-                <span>Email *</span>
-                <v-text-field
-                  v-model="formulario.email"
-                  clearable
-                  filled
-                  dense
-                  solo
-                  tile
-                  background-color="#00000022"
-                  color="white"
-                  placeholder="joseribeiro@gmail.com"
-                  required
-                  class="formfield"
-                />
-              </v-col>
-              <v-col align="start">
-                <span>Nome</span>
-                <v-text-field
-                  v-model="formulario.nome"
-                  clearable
-                  filled
-                  dense
-                  solo
-                  background-color="#00000022"
-                  color="white"
-                  placeholder="José Ribeiro da Silva"
-                  class="formfield"
-                />
-              </v-col>
-            </v-row>
-            <v-row class="linha">
-              <v-col align="start">
-                <span>Assunto</span>
-                <v-text-field
-                  v-model="formulario.assunto"
-                  clearable
-                  filled
-                  dense
-                  solo
-                  background-color="#00000022"
-                  color="white"
-                  placeholder="Compra de camisetas"
-                  class="formfield"
-                />
-              </v-col>
-            </v-row>
-            <v-row class="linha">
-              <v-col align="start">
-                <span>Mensagem *</span>
-                <v-textarea
-                  v-model="formulario.mensagem"
-                  filled
-                  background-color="#00000022"
-                  color="white"
-                  placeholder="Olá, tudo bem? gostaria de saber se é possível comprar várias camisetas de uma vez."
-                  clearable
-                  solo
-                  required
-                  class="formfield"
-                />
-              </v-col>
-            </v-row>
-            <v-row class="linha">
-              <v-col align="end">
-                <v-btn tile class="btn" dark type="submit">Enviar</v-btn>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-col>
-      </v-card>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-row justify="center" align="center" style="min-height : 90vh">
+      <v-col align="center">
+        <v-card tile class="card">
+          <v-col align="start">
+            <span class="title">Contato</span>
+          </v-col>
+          <v-col>
+            <v-form @submit.prevent="enviarMensagem()">
+              <v-row v-if="!user" class="linha">
+                <v-col align="start">
+                  <span class="label">Email *</span>
+                  <v-text-field
+                    v-model="formulario.email"
+                    class="rounded-0 preencher"
+                    clearable
+                    filled
+                    dense
+                    solo
+                    hide-details
+                    background-color="#00000022"
+                    color="#000"
+                    light
+                    placeholder="joseribeiro@gmail.com"
+                    required
+                  />
+                </v-col>
+                <v-col align="start">
+                  <span class="label">Nome</span>
+                  <v-text-field
+                    v-model="formulario.nome"
+                    class="rounded-0 preencher"
+                    clearable
+                    filled
+                    dense
+                    solo
+                    hide-details
+                    background-color="#00000022"
+                    color="#000"
+                    light
+                    placeholder="José Ribeiro da Silva"
+                  />
+                </v-col>
+              </v-row>
+              <v-row class="linha">
+                <v-col align="start">
+                  <span class="label">Assunto</span>
+                  <v-text-field
+                    v-model="formulario.assunto"
+                    class="rounded-0 preencher"
+                    clearable
+                    filled
+                    dense
+                    solo
+                    hide-details
+                    background-color="#00000022"
+                    color="#000"
+                    light
+                    placeholder="Compra de camisetas"
+                  />
+                </v-col>
+              </v-row>
+              <v-row class="linha">
+                <v-col align="start">
+                  <span class="label">Mensagem *</span>
+                  <v-textarea
+                    v-model="formulario.mensagem"
+                    class="rounded-0 preencher"
+                    clearable
+                    filled
+                    dense
+                    solo
+                    hide-details
+                    background-color="#00000022"
+                    color="#000"
+                    light
+                    placeholder="Olá, tudo bem? gostaria de saber se é possível comprar várias camisetas de uma vez."
+                    required
+                  />
+                </v-col>
+              </v-row>
+              <v-row class="linha">
+                <v-col align="end">
+                  <v-btn :loading="loading" tile class="btn" dark type="submit">Enviar</v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-col>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
+      loading: false,
+      user: null,
       formulario: {
         email: null,
         nome: null,
         assunto: null,
         mensagem: null,
+      },
+    };
+  },
+
+  created() {
+    this.$store.dispatch("auth/GET").then((res) => {
+      if (res.user) {
+        this.user = res.user;
+        this.formulario.email = this.user.email;
+        this.formulario.nome = this.user.nome;
       }
-    }
+    });
+  },
+  watch: {
+    "$store.state.auth.user": function () {
+      this.user = this.$store.state.auth.user;
+      this.formulario.email = this.user?.email;
+      this.formulario.nome = this.user?.nome;
+    },
   },
   methods: {
-    enviarMensagem () {
-      if (!this.validateForm()) return this.$alert.info('Campos obrigatórios incorretos!')
+    async enviarMensagem() {
+      if (!this.validateForm())
+        return this.$alert.info("Campos obrigatórios incorretos!");
+        this.loading = true
       try {
-        this.$alert.success('Obrigado pela sua mensagem!')
+        await this.$axios.$post("/feedback", this.formulario);
+        this.$alert.success("Obrigado pela sua mensagem!");
+        this.formulario = {
+          assunto: null,
+          mensagem: null,
+        };
       } catch (error) {
-        this.$alert.error('Não foi possível enviar sua mensagem!')
+        this.$alert.error("Não foi possível enviar sua mensagem!");
       }
+      this.loading = false
     },
 
     validateForm() {
-      return this.formulario.mensagem && this.formulario.email &&(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.formulario.email)) && this.formulario.mensagem.length > 3
-    }
-  }
-}
+      return (
+        this.formulario.mensagem &&
+        this.formulario.email &&
+        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+          this.formulario.email
+        ) &&
+        this.formulario.mensagem.length > 3
+      );
+    },
+  },
+};
 </script>
 
 <style scoped>
 .card {
   max-width: 700px;
-  background: rgba(255, 255, 255, 0.705);
+  background-color: rgba(255, 255, 255, 0.657);
   margin: 1rem 0;
 }
 
@@ -138,14 +182,26 @@ export default {
   color: #000;
 }
 
-.formfield {
-  min-width: 220px;
+.label {
+  display: flex;
+  align-items: center;
+  background: #0000008f;
+  color: #fff !important;
+  padding: 0rem 0.7rem;
+  width: fit-content !important;
+  height: 30px;
   margin-top: 6px;
+}
+
+.preencher {
+  min-width: 220px;
+  margin-bottom: 6px;
+  width: 100% !important;
 }
 
 .btn {
   width: 200px;
-  box-shadow: inset 0px 0px 0px #2F3B47;
+  box-shadow: inset 0px 0px 0px #2f3b47;
   transition: all 0.5s !important;
 }
 .btn:hover {

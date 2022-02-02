@@ -24,8 +24,11 @@ export default {
   ],
 
   axios: {
-    baseURL: 'https://blocobsb.com.br/api',
-    // baseURL: 'http://localhost:4044/api'
+    baseURL: process.env.NODE_ENV ==='prod' ? "https://blocobsb.com.br/api" : "http://localhost:4044/api"
+  },
+
+  publicRuntimeConfig: {
+    admin: process.env.ADMIN
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins

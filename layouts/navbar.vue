@@ -6,11 +6,11 @@
           <v-row>
             <a
               class="socialItem"
-              :href="'https://wa.me/5561981889864?text=' + getMensagem()"
+              :href="'https://wa.me/556193687754?text=' + getMensagem()"
               target="_blank"
             >
               <Icons class="icon" icon="wpp" />
-              <span class="socialText">(61) 98188-9864</span>
+              <span class="socialText">(61) 9368-7754</span>
             </a>
             <a
               class="socialItem"
@@ -25,29 +25,81 @@
         <v-spacer />
         <v-col>
           <v-row>
-            <Icons class="icon" icon="search" />
-            <input
-              class="searchInput"
-              type="text"
-              placeholder="Pesquise seu produto..."
-            />
+            <v-col>
+              <v-menu
+                bottom
+                offset-y
+                transition="scroll-y-transition"
+                max-width="400px"
+                nudge-right="25%"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-row v-bind="attrs" v-on="on" align="center">
+                    <Icons class="icon" icon="search" />
+                    <input
+                      v-model="pesquisa"
+                      class="searchInput"
+                      type="text"
+                      placeholder="Pesquise seu produto..."
+                      @keyup="pesquisar()"
+                      @click="reset()"
+                    />
+                  </v-row>
+                </template>
+                <v-row
+                  style="
+                    height: fit-content !important;
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    background: #2f3b47dd !important;
+                  "
+                >
+                  <v-col v-if="loadingResults">
+                    <div class="loader"></div>
+                  </v-col>
+                  <v-col
+                    v-if="!loadingResults"
+                    style="
+                      height: fit-content !important;
+                      margin: 0 !important;
+                      padding: 0 !important;
+                    "
+                  >
+                    <v-list
+                      v-if="searchResults.length === 0"
+                      color="transparent"
+                    >
+                      <v-list-item>
+                        <span style="padding: 0.5rem 1rem"
+                          >Sem resultados encontrados.</span
+                        >
+                      </v-list-item>
+                    </v-list>
+                    <v-list v-if="searchResults.length > 0" color="transparent">
+                      <v-list-item
+                        v-for="item in searchResults"
+                        :key="item._id"
+                        class="searchItem"
+                        @click="goToProduct(item._id)"
+                      >
+                        <div>{{ item.nome }}</div>
+                      </v-list-item>
+                    </v-list>
+                  </v-col>
+                </v-row>
+              </v-menu>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-app-bar>
-    <v-app-bar
-      :class="scrolled ? 'navScrolled' : 'nav'"
-      height="70px"
-      flat
-      :fixed="scrolled"
-    >
+    <v-app-bar class="nav" height="70px" flat>
       <v-row class="navMenu">
         <NuxtLink to="/">
           <v-img
             :src="require('../assets/logo/logoPrincipal.png')"
             class="imgLogo"
             max-width="140px"
-            :class="scrolled ? 'whiteLogo' : ''"
           />
         </NuxtLink>
 
@@ -68,7 +120,13 @@
             <span>Novidades</span>
           </div>
         </div>
-        <v-menu open-on-hover bottom offset-y flat>
+        <v-menu
+          open-on-hover
+          bottom
+          offset-y
+          flat
+          transition="scroll-y-transition"
+        >
           <template v-slot:activator="{ on, attrs }">
             <div class="lineTransition">
               <div class="navMenuItem" v-bind="attrs" v-on="on">
@@ -78,11 +136,7 @@
             </div>
           </template>
 
-          <v-list
-            class="sobreMenu"
-            flat
-            :color="scrolled ? '#000000' : '#2e5870aa'"
-          >
+          <v-list class="sobreMenu" flat color="#2F3B47dd">
             <v-list-item>
               <NuxtLink
                 class="lineTransition"
@@ -122,13 +176,20 @@
           </div>
         </NuxtLink>
         <div class="divider" />
-        <div v-if="!logado" class="lineTransition" @click="login()">
+        <div v-if="!user" class="lineTransition" @click="login()">
           <div class="navMenuItem">
             <Icons class="icon navMenuItemIcon" icon="login" />
             <span>Entrar</span>
           </div>
         </div>
-        <v-menu v-if="logado" open-on-hover bottom offset-y flat>
+        <v-menu
+          v-if="user"
+          open-on-hover
+          bottom
+          offset-y
+          flat
+          transition="scroll-y-transition"
+        >
           <template v-slot:activator="{ on, attrs }">
             <NuxtLink
               class="lineTransition"
@@ -142,18 +203,14 @@
             </NuxtLink>
           </template>
 
-          <v-list
-            class="sobreMenu"
-            flat
-            :color="scrolled ? '#000000' : '#2e5870aa'"
-          >
+          <v-list class="sobreMenu" flat color="#2F3B47dd">
             <v-list-item>
               <NuxtLink
                 to="/conta"
                 style="text-decoration: none; color: inherit"
               >
                 <div class="navMenuItem sobreItem">
-                  <span>{{ email }}</span>
+                  <span>{{ user.email }}</span>
                 </div>
               </NuxtLink>
             </v-list-item>
@@ -169,7 +226,6 @@
         </v-menu>
       </v-row>
     </v-app-bar>
-    <div v-if="scrolled" style="height: 70px"></div>
     <TabelaTamanhos v-model="showTabela" />
     <Trocas v-model="showTrocas" />
   </div>
@@ -188,37 +244,88 @@ export default {
   },
   data() {
     return {
+      searchResults: [],
+      loadingResults: false,
       showTabela: false,
       showTrocas: false,
       scrolled: false,
-      logado: true,
-      email: "hacmelo@gmail.com",
+      user: null,
+      pesquisa: null,
+      delay: null,
     };
   },
   mounted() {
     window.addEventListener("scroll", this.onScroll);
+    this.$store.dispatch("auth/GET").then((res) => {
+      if (res.user) {
+        this.user = res.user;
+      }
+    });
   },
   beforeDestroy() {
     window.removeEventListener("scroll", this.onScroll);
   },
+  watch: {
+    "$store.state.auth.user": function () {
+      this.user = this.$store.state.auth.user;
+    },
+  },
   methods: {
+    reset() {
+      this.pesquisa = null;
+      this.searchResults = [];
+    },
+    pesquisar() {
+      if (this.pesquisa?.length < 3) return;
+      clearInterval(this.delay);
+      this.loadingResults = true;
+      this.delay = setTimeout(async () => {
+        try {
+          this.searchResults = await this.$axios.$get(
+            "/produto?filtros=" +
+              JSON.stringify({ search: true, nome: this.pesquisa })
+          );
+        } catch (error) {}
+        this.loadingResults = false;
+      }, 1000);
+    },
+
+    goToProduct(id) {
+      this.$router.push("/produtos/" + id);
+      this.pesquisa = null;
+      this.searchResults = [];
+    },
+
     goToNovidades() {
-      console.log("novidades");
+      if (this.$router.currentRoute.name !== "index") this.$router.push("/");
+      setTimeout(() => {
+        const el = document.getElementById("novidades");
+        const y = el?.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }, 800);
     },
 
     login() {
-      console.log("login");
+      this.$router.push("/autenticar");
     },
 
     logout() {
-      console.log("logout");
+      this.$store.dispatch("auth/LOGOUT").then((res) => {
+        if (res) {
+          this.$router.push("/");
+          this.$alert.success("Logout feito com sucesso!");
+        }
+      });
     },
 
     onScroll(e) {
       this.scrolled = window.top.scrollY > 50 ? true : false;
     },
     getMensagem() {
-      return "oi";
+      let mensagem = "Olá, tudo bem? ";
+      if (this.user) mensagem += `Me chamo ${this.user.nome}! `;
+      mensagem += `Gostaria de tirar algumas dúvidas :)`;
+      return mensagem;
     },
   },
 };
@@ -249,6 +356,10 @@ export default {
 
 .searchInput:focus {
   outline: none;
+}
+
+.searchMenu {
+  cursor: pointer;
 }
 
 .imgLogo {
@@ -306,7 +417,7 @@ export default {
 
 .whiteLogo {
   background-color: #ffffffab;
-   margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 ::placeholder {
@@ -334,5 +445,65 @@ export default {
 .sobreItem {
   cursor: pointer;
   font-size: 1rem !important;
+}
+
+.loader,
+.loader:before,
+.loader:after {
+  background: #ffffff;
+  -webkit-animation: load1 1s infinite ease-in-out;
+  animation: load1 1s infinite ease-in-out;
+  width: 1em;
+  height: 4em;
+}
+.loader {
+  color: #ffffff;
+  text-indent: -9999em;
+  margin: 5% auto;
+  position: relative;
+  font-size: 5px;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before,
+.loader:after {
+  position: absolute;
+  top: 0;
+  content: "";
+}
+.loader:before {
+  left: -1.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 1.5em;
+}
+@-webkit-keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
+}
+@keyframes load1 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 0;
+    height: 4em;
+  }
+  40% {
+    box-shadow: 0 -2em;
+    height: 5em;
+  }
 }
 </style>
