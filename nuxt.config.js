@@ -24,7 +24,7 @@ export default {
   ],
 
   axios: {
-    baseURL: process.env.NODE_ENV ==='prod' ? "https://blocobsb.com.br/api" : "http://localhost:4044/api"
+    baseURL: "https://blocobsb.com.br/api"
   },
 
   publicRuntimeConfig: {
