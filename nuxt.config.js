@@ -28,7 +28,7 @@ export default {
   },
 
   publicRuntimeConfig: {
-    admin: process.env.ADMIN
+    admin: "blocobsb@gmail.com"
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
