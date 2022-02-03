@@ -1,5 +1,5 @@
 <template>
-  <v-app class="window" :style="image">
+  <v-app :class="width > 500 ? 'window' : 'static'" :style="width > 500 ? image : null">
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <Navbar v-if="width > 950" />
     <Drawer v-if="width <= 950" />
@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style>
+.static {
+  background: #315e7b !important;
+}
 .window {
   background-size: cover !important;
   background-position: center 18% !important;
