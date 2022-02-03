@@ -247,6 +247,12 @@ export default {
       }, 1000);
     },
 
+    goToProduct(id) {
+      this.$router.push("/produtos/" + id);
+      this.pesquisa = null;
+      this.searchResults = [];
+    },
+
     goToNovidades() {
       if (this.$router.currentRoute.name !== "index") this.$router.push("/");
       setTimeout(() => {

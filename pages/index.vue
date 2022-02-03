@@ -2,22 +2,18 @@
   <v-container fluid>
     <v-row
       justify="start"
-      :align="align()"
+      align="center"
       :style="`height: calc(100vh - ${
         width > 850 ? '105px' : '50px'
-      }) !important; position: relative; margin-top: ${
-        width > 850 ? '0px' : '30px'
-      }`"
+      }) !important; position: relative`"
     >
-      <v-col style="width: fit-content !important; margin: 0 10%">
+      <v-col align="center">
         <v-row>
           <v-col>
-            <span class="header">De Brasília,</span>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <span class="header">nascida e criada.</span>
+            <v-img
+            :src="require('../assets/logo/logoPrincipal.png')"
+            class="imgLogo"
+          />
           </v-col>
         </v-row>
       </v-col>
@@ -257,10 +253,6 @@ export default {
       this.width = window.innerWidth;
     },
 
-    align() {
-      return this.width > 850 ? "center" : "start";
-    },
-
     goToSlide() {
       const el = document.getElementById("slides");
       const y =
@@ -340,6 +332,12 @@ export default {
 </script>
 
 <style scoped>
+
+.imgLogo {
+  background: rgba(255, 255, 255, 0.267);
+  max-width: 200px;
+  margin-bottom: 10%;
+}
 .header {
   color: #000;
   font-size: calc(2vw + 1.3rem);

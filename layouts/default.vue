@@ -1,5 +1,8 @@
 <template>
-  <v-app :class="width > 500 ? 'window' : 'static'" :style="width > 500 ? image : null">
+  <v-app
+    :class="isIphone ? 'iphone' : 'window'"
+    :style="image"
+  >
     <script src="https://apps.elfsight.com/p/platform.js" defer></script>
     <Navbar v-if="width > 950" />
     <Drawer v-if="width <= 950" />
@@ -29,9 +32,11 @@ export default {
     return {
       width: null,
       image: { backgroundImage: `url(${backgroundImg})` },
+      isIphone: null
     };
   },
   mounted() {
+    this.isIphone = navigator.userAgent.includes("iPhone")
     this.getUser();
     this.width = window.innerWidth;
     this.$nextTick(() => {
@@ -51,7 +56,7 @@ export default {
     getUser() {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user) {
-        this.$store.dispatch("auth/LOGIN", user)
+        this.$store.dispatch("auth/LOGIN", user);
       }
     },
   },
@@ -59,8 +64,8 @@ export default {
 </script>
 
 <style>
-.static {
-  background: #315e7b !important;
+.iphone {
+  background: #336280 !important;
 }
 .window {
   background-size: cover !important;
