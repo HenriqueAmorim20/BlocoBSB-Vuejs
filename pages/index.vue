@@ -288,7 +288,7 @@ export default {
       this.timer = setInterval(() => {
         if (this.index === this.slideHome.length - 1) this.index = 0;
         else ++this.index;
-        this.urlSlide = this.slideHome[this.index].url;
+        this.urlSlide = this.slideHome[this.index]?.url;
       }, 5000);
     },
 
@@ -297,7 +297,7 @@ export default {
       this.index += value;
       if (this.index === this.slideHome.length) this.index = 0;
       else if (this.index < 0) this.index = this.slideHome.length - 1;
-      this.urlSlide = this.slideHome[this.index].url;
+      this.urlSlide = this.slideHome[this.index]?.url;
       this.startSlide();
     },
 
