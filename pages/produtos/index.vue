@@ -85,9 +85,9 @@ export default {
 
 <style scoped>
 .card {
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.226);
   padding: 1rem;
-  margin: 1rem 0;
+  margin: 5rem 0 1rem;
   color: #000;
   max-width: 1250px !important;
 }

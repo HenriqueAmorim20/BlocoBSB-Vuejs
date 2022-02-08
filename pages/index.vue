@@ -348,7 +348,7 @@ export default {
 
 .card {
   max-width: 1200px !important;
-  background-color: rgba(255, 255, 255, 0.507);
+  background-color: rgba(255, 255, 255, 0.226);
   /* margin: 4rem 0; */
   color: #000;
 }
