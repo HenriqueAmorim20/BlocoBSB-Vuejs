@@ -6,11 +6,11 @@
           <v-row>
             <a
               class="socialItem"
-              :href="'https://wa.me/556193687754?text=' + getMensagem()"
+              :href="'https://wa.me/5561981889864?text=' + getMensagem()"
               target="_blank"
             >
               <Icons class="icon" icon="wpp" />
-              <span class="socialText">(61) 9368-7754</span>
+              <span class="socialText">(61) 98188-9864</span>
             </a>
             <a
               class="socialItem"

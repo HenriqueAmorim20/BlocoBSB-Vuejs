@@ -38,7 +38,7 @@
       <v-col style="min-width: 150px">
         <v-row align="center">
           <a
-            :href="'https://wa.me/556193687754?text=' + getMensagem()"
+            :href="'https://wa.me/5561981889864?text=' + getMensagem()"
             target="_blank"
           >
             <Icons class="mediaIcon" icon="wpp" />

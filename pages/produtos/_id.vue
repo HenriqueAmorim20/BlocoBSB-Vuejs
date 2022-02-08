@@ -73,7 +73,7 @@
               <v-row v-if="!loading">
                 <v-col align="center">
                   <a
-                    :href="`https://wa.me/556193687754?text=${getMensagem()}`"
+                    :href="`https://wa.me/5561981889864?text=${getMensagem()}`"
                     target="_blank"
                     style="width: fit-content; text-decoration: none"
                   >
